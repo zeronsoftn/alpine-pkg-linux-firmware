@@ -2,7 +2,7 @@
 # Maintainer: Natanael Copa <ncopa@alpinelinux.org>
 pkgname=linux-firmware
 pkgver=20210315
-pkgrel=0
+pkgrel=1
 pkgdesc="firmware files for linux"
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
 arch="all"
@@ -14,10 +14,11 @@ options="!strip !check !archcheck !tracedeps !spdx"
 
 _rpi_bt=e7fd166981ab4bb9a36c2d1500205a078a35714d
 
-source="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-$pkgver.tar.gz
+source="http://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-$pkgver.tar.gz
 	BCM43430A1.hcd.${_rpi_bt::8}::https://github.com/RPi-Distro/bluez-firmware/raw/$_rpi_bt/broadcom/BCM43430A1.hcd
 	BCM4345C0.hcd.${_rpi_bt::8}::https://github.com/RPi-Distro/bluez-firmware/raw/$_rpi_bt/broadcom/BCM4345C0.hcd
-	"
+	BCM43430B0.hcd.${_rpi_bt::8}::https://github.com/RPi-Distro/bluez-firmware/raw/$_rpi_bt/broadcom/BCM43430B0.hcd
+	BCM4345C5.hcd.${_rpi_bt::8}::https://github.com/RPi-Distro/bluez-firmware/raw/$_rpi_bt/broadcom/BCM4345C5.hcd"
 
 _builddir="$srcdir"/$pkgname-$pkgver
 
@@ -28,9 +29,9 @@ _folders="3com acenic adaptec advansys amd amd-ucode amdgpu ar3k ath10k ath11k
 	ess go7007 i915 imx inside-secure intel isci kaweth keyspan keyspan_pda korg
 	libertas liquidio matrox mediatek mellanox meson microchip moxa mrvl mwl8k
 	mwlwifi myricom netronome nvidia ositech qca qcom qed qlogic r128 radeon
-	rockchip rsi rtl8192e rtl_bt rtl_nic rtlwifi rtw88 sb16 slicoss sun sxg tehuti
-	ti ti-connectivity ti-keystone tigon ttusb-budget ueagle-atm vicam vxge yam
-	yamaha"
+	rockchip rsi rtl8192e rtl_bt rtl_nic rtlwifi rtw88 rtw89 sb16 silabs slicoss
+	sun sxg tehuti ti ti-connectivity ti-keystone tigon ttusb-budget ueagle-atm
+	vicam vxge yam yamaha"
 
 subpackages="$pkgname-other::noarch $pkgname-none::noarch"
 depends="linux-firmware-other=$pkgver-r$pkgrel"
@@ -132,6 +133,8 @@ ucode() {
 	  bsdtar --null -cf - --format=newc @- > "$subpkgdir"/boot/amd-ucode.img
 }
 
-sha512sums="06e4dbd4b48d655ee0a266a1d516a04fa7c03badfe5b46fdc33b7251f9c4aef904f38e87949d5993d7bc453a6f6104cf5ae7695c817a26e91943d77395d85cc5  linux-firmware-$pkgver.tar.gz
+sha512sums="9635a1dff94e32b95e2bb18dcd6d5d73dc4eb6b7d408bb90dd796b5351ec2fa40a75bbf426191937c2b303faceeff7104f483f849b5e899364c4d2bafeff1a8d  linux-firmware-$pkgver.tar.gz
 355c940b4fd597101c332207678fd28154d7e7a90cb374b1fdf230d2061bf979af0209c5a423fca8d23ddb3d95abec741e7dd651da7f0aaa97459ed4fe4d2355  BCM43430A1.hcd.${_rpi_bt::8}
-1707c2955ceac3e6fc4b1edb8965c871dcfab21ce85cc617de67d7e6f3d6f9b93ee5a8a202de6b20f7b43d1462668287a8569786146cadf5e0268058d2524a9c  BCM4345C0.hcd.${_rpi_bt::8}"
+c8b943bfeffa54ce1687ca69884e9d56efd28d5ea1dbef660915a80c3e036a8675e7d4299102c32006193e4895367654bb67e2d08e66d7803f396eee7e3dfbd6  BCM43430B0.hcd.${_rpi_bt::8}
+1707c2955ceac3e6fc4b1edb8965c871dcfab21ce85cc617de67d7e6f3d6f9b93ee5a8a202de6b20f7b43d1462668287a8569786146cadf5e0268058d2524a9c  BCM4345C0.hcd.${_rpi_bt::8}
+eac7428befa36952542e19d3c4a5fa96e1cb3a56c3b00770534909fb0d8caf503a42368175e715e1de58e50cfbd2b4c8ea5a26af3bd546cbbaf8d2c12457a628  BCM4345C5.hcd.${_rpi_bt::8}"
